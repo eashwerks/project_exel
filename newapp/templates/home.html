@@ -39,6 +39,7 @@
                 {% csrf_token %}
                 <input type="file" id="my_file">
                 <button id="sbmt" type="submit">Upload</button>
+                <progress id="pr" hidden></progress>
             </form>
             <p id="res"></p>
 
@@ -183,6 +184,7 @@
 
             $('#frm').submit(function(e) {
                 e.preventDefault();
+                $('#pr').show();
                 var formData = new FormData($('#frm')[0]);
                 formData.append('file', $('#my_file')[0].files[0]);
 
@@ -302,6 +304,8 @@
                         csrfmiddlewaretoken: g_csrftoken
                     }
                 }).done(function(data) {
+                    $('#res').empty();
+                    $('#my_file').empty();
                     console.log("DONE: ", data);
                     g_auth = null;
                     initLogin();
